@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills pull-right">
+        <li role="presentation"><a href="{{ url_for('admin') }}">Admin</a></li>
+        <li role="presentation" class="active"><a href="{{ url_for('query') }}">Query</a></li>
+        <li role="presentation"><a href="{{ url_for('notice') }}">Notice</a></li>
+        <li role="presentation"><a href="{{ url_for('logout') }}">Log Out</a></li>
+      </ul>
+    </nav>
+    <h3 class="text-muted"><a href="{{url_for('home')}}" style="text-decoration:none">Share and Learn</a></h3>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+    <form action="/delete-query" method="post">
+        <table>
+          <tr>
+            <td>
+              <label>Delete from:&nbsp;</label>
+            </td>
+            <td>
+              <div class="form-group">
+              <select class="form-control" name="table" required>
+                <option></option>
+                <option value="comment">comment</option>
+                <option value="notice">notice</option>
+                <option value="post">post</option>
+              </select>
+              </div>
+            </td>
+            <td>
+              <label> &nbsp;&nbsp; with ID = &nbsp;</label>
+            </td>
+            <td> 
+              <input type="text" class="form-control" name="id" required>
+            </td>
+            <td>&nbsp;&nbsp;</td>
+            <td>
+              <button type="submit" class="btn btn-primary" value="Post" data-toggle="modal" data-target=".bs-example-modal-sm">Submit</button>
+            </td>
+          </tr>
+        </table>
+    </form>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <form action="/get-query" method="Post">
+      <div class="form-group">
+        <label>input sql query</label>
+        <textarea id = "query" class="form-control" rows="1" name="query" required></textarea>
+        </div>
+        {% if error %}
+          <p>Something's wrong with your query, please check again: )</p>
+        {% endif %}
+        <p class="help-block">Example: select * from user;</p>
+        <button type="submit" class="btn btn-primary" value="Post" data-toggle="modal" data-target=".bs-example-modal-sm">Submit</button>
+        <button class="btn btn-success" id="clear">clear</button>
+        <div class="form-group">
+
+        </div>
+      </form>
+
+      <p>
+      <a data-toggle="collapse" data-parent="#accordion" href="#sql_result">See the results</a>
+      </p>
+    </div>
+  </div>
+
+  <div id="sql_result" class="panel-collapse collapse">
+    <div class="panel-body">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+        Search result:
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+          {% if query_result %}
+            <table class="table table-hover">
+            {% for row in query_result %}
+              <tr>
+                <td>
+                {% for item in  row %}
+                  <label>{{ item }}</label>
+                {% endfor %}
+                </td>
+              </tr>
+            {% endfor %}
+            </table>
+          {% else %}
+             <table class="table table-hover">
+               <tr>
+                 <td>
+                   <label>Nothing!</label>
+                 </td>
+               </tr>
+             </table>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+document.getElementById("clear").addEventListener("click", myFunction);
+function myFunction() {
+  document.getElementById("query").value = "Clearing...";
+}
+</script>
+
+{% endblock %}

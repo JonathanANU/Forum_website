@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="header clearfix">
+  <nav>
+    <ul class="nav nav-pills pull-right">
+      <li role="presentation" class="active"><a href="{{ url_for('admin') }}">Admin</a></li>
+      <li role="presentation"><a href="{{ url_for('query') }}">Query</a></li>
+      <li role="presentation"><a href="{{ url_for('notice') }}">Notice</a></li>
+      <li role="presentation"><a href="{{ url_for('admin_logout') }}">Log Out</a></li>
+    </ul>
+  </nav>
+  <h3 class="text-muted"><a href="{{url_for('home')}}" style="text-decoration:none">Share and Learn</a></h3>
+</div>
+
+<div>
+  <h1 style="text-align:center">{{message}}</h1><hr>
+  <ul>
+    <li>Total number of users: &nbsp;{{ total_user }};</li>
+    {% if notice_count == 1 %}
+      <li>You have sent out {{ notice_count }} notice;</li>
+    {% else %}
+      <li>You have sent out {{ notice_count }} notices;</li>
+    {% endif %}
+    <li>Average hours to reply: &nbsp;{{ avg_time }};</li>
+    <li>Posts that do not have replies yet (ID): &nbsp;
+      {% for no_reply_post in no_reply_posts %}
+        {{ no_reply_post }} &nbsp;
+      {% endfor %}
+    </li>
+  </ul>
+  <hr>
+</div>
+
+<center>
+  <div style="width:600px;">
+    <img src="../static/images/topic.png" style="max-width:100%">
+    <img src="../static/images/category.png" style="max-width:100%">
+    <img src="../static/images/reply.png" style="max-width:100%">
+  </div>
+</center>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="header clearfix">
+  <nav>
+    <ul class="nav nav-pills pull-right">
+      <li role="presentation"><a href="{{ url_for('home') }}">Home</a></li>
+      <li role="presentation"><a href="{{ url_for('forum') }}">Forum</a></li>
+      <li role="presentation" class="active"><a href="{{ url_for('post') }}">Post</a></li>
+      <li role="presentation"><a href="{{ url_for('logout') }}">Log Out</a></li>        
+    </ul>
+  </nav>
+  <h3 class="text-muted"><a href="{{url_for('home')}}" style="text-decoration:none">Share and Learn</a></h3>
+</div>
+
+<form action="/create-post", method="Post">
+  <div class="form-group">
+    <h1>Make a new post</h1>
+    <p>Be clear. Be nice.</p>
+
+    <label>Title</label>
+    <input class="form-control" name = "title" required>
+  </div>
+
+  <div class="form-group">
+    <label>About</label>
+    <select class="form-control" name="about" required>
+      <option></option>
+      <option value="Assignment">Assignment</option>
+      <option value="Weekly exercise">Weekly exercise</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Topic</label>
+    <select class="form-control" name="topic" required>
+      <option value=""></option>
+      <option value="String">String</option>
+      <option value="Dictionary">Dictionary</option>
+      <option value="List">List</option>
+      <option value="Function">Function</option>
+      <option value="Module">Module</option>
+      <option value="Class">Class</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Text area</label>
+    <textarea class="form-control" rows="5" id = "content" name="text" required></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary" value="Post" data-toggle="modal" data-target=".bs-example-modal-sm">Submit</button>
+  <button type="reset" class="btn btn-success">Reset</button>
+</form>
+{% endblock %}

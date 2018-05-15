@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills pull-right">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation"><a href="{{ url_for('forum') }}">Forum</a></li>
+        <li role="presentation"><a href="{{ url_for('post') }}">Post</a></li>
+        <li role="presentation"><a href="{{ url_for('logout') }}">Log Out</a></li>
+      </ul>
+    </nav>
+    <h3 class="text-muted"><a href="{{url_for('home')}}" style="text-decoration:none">Share and Learn</a></h3>
+  </div>
+
+  <div class="jumbotron">
+  <h2>COMP1040 FORUM</h2>
+  <p class="lead"></p>
+  </div>
+
+  <div class="container">
+  <div class="page-header">
+    <h1 id="timeline">NOTICE</h1>
+  </div>
+  <ul class="timeline">
+
+  {% for notice in notices %}
+    {% if num % 2 == 0 %}
+      {% set num = num + 1 %}
+      <li>
+        <div class="timeline-badge"><i class="glyphicon glyphicon-calendar"></i></div>
+        <div class="timeline-panel">
+          <div class="timeline-heading">
+            <h4 class="timeline-title"> {{ notice.title }} </h4>
+            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 
+            {{notice.date}} </small></p>
+          </div>
+          <div class="timeline-body">
+            <p> {{notice.text}} </p>
+          </div>
+        </div>
+      </li>
+    {% else %}
+      {% set num = num + 1 %}
+      <li class="timeline-inverted">
+        <div class="timeline-badge"><i class="glyphicon glyphicon-calendar"></i></div>
+        <div class="timeline-panel">
+          <div class="timeline-heading">
+            <h4 class="timeline-title"> {{ notice.title }} </h4>
+            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 
+            {{notice.date}} </small></p>
+          </div>
+          <div class="timeline-body">
+            <p> {{notice.text}} </p>
+          </div>
+        </div>
+      </li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+  </div>
+{% endblock %}
+

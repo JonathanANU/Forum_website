@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills pull-right">
+        <li role="presentation"><a href="{{ url_for('home') }}">Home</a></li>
+        <li role="presentation" class="active"><a href="{{ forum }}">Forum</a></li>
+        <li role="presentation"><a href="{{ url_for('post') }}">Post</a></li>
+        <li role="presentation"><a href="{{ url_for('logout') }}">Log Out</a></li>        
+      </ul>
+    </nav>
+    <h3 class="text-muted"><a href="{{url_for('home')}}" style="text-decoration:none">Share and Learn</a></h3>
+  </div>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-sm-9">
+      {% for post in posts %}
+        {% set post_id = post.id %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4>
+              {{post.title}}
+            </h4>
+            <br>
+            <p> By: {{ post.username}}&nbsp;&nbsp;Date: {{ post.date }}&nbsp;&nbsp;Post ID: {{post.id}}<br>
+                About: {{ post.about }} &nbsp;&nbsp; Topic: {{ post.topic }}</p>
+            <hr>
+            <p> {{post.text}}</p>
+            <p>
+              <a data-toggle="collapse" data-parent="#accordion" href="#{{post.id}}seereply">See reply</a>
+              <br>
+              <a data-toggle="collapse" data-parent="#accordion" href="#{{post.id}}reply">Reply</a>
+            </p>
+          </div>
+
+          <div id="{{post.id}}seereply" class="panel-collapse collapse">
+            <div class="panel-body">
+            {% set replies = Comment.select().where(Comment.post_id == post_id).order_by(Comment.date.desc()) %}
+              {% if replies.where(Comment.post_id == post_id).exists() %}
+                {% for reply in replies %}
+                  <h4 class="panel-title">
+                    By: {{reply.username}}  <br>
+                    Time: {{reply.date}}
+                  </h4>
+                  <h4 class="panel-title">
+                    Content: {{reply.text}}
+                  </h4>
+                  <br>
+                {% endfor %}
+              {% else %}
+                  <h4 class="panel-title">
+                    No replies yet:)
+                  </h4>
+              {% endif %}
+            </div>
+          </div>
+
+          <form action="/create-comment" method="Post">
+            <div id="{{post.id}}reply" class="panel-collapse collapse">
+              <div class="panel-body">
+                <input type="hidden" class="form-control" name = "post_id" value="{{post.id}}">
+                <div class="form-group">
+                  <label>Content: </label>
+                  <textarea class="form-control" rows="5"  name="comment_text"></textarea>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Submit" data-toggle="modal" data-target=".bs-example-modal-sm">
+              </div>
+            </div>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+
+    <form action="/select", method="Post" id="myForm">
+
+    <div class="col-sm-3">
+      <div class="sidebar-module">
+        <ul class="list-group">
+          <li class="list-group-item">
+          <span class="badge"></span>
+          <button class="btn btn-primary" style="background-color: white;color: black;border: 0px" onclick="All()">View all&nbsp;&nbsp;&nbsp;&nbsp;</button>
+          </li>
+        {% for topic in topics %}
+          <li class="list-group-item">
+          <span class="badge"> {{ counts[num] }}</span>
+          <button class="btn btn-primary" style="background-color: white;color: black;border: 0px" onclick="{{ topic }}()">{{ topic }}</button>
+          </li>
+        {% set num = num + 1 %}
+        {% endfor %}
+        </ul>
+      </div>
+
+      <div style="display: none">
+      <select  id="mySelect" class="form-control" name="topic" required>
+      <option value="String">String</option>
+      <option value="Dictionary">Dictionary</option>
+      <option value="List">List</option>
+      <option value="Function">Function</option>
+      <option value="Module">Module</option>
+      <option value="Class">Class</option>
+      <option value="All">All</option>
+      </select>
+      </div>
+
+      <div class="sidebar-module">
+        <ol class="list-unstyled">
+          <li><a href="#">StackOverflow</a></li>
+          <li><a href="#">Python Documentation</a></li>
+          <li><a href="#">Google, of course</a></li>
+        </ol>
+      </div>
+    </div>
+
+      <div style="display: none">
+       <button type="submit" class="btn btn-primary" value="Post" data-toggle="modal" data-target=".bs-example-modal-sm" id="submit">Submit</button>
+      </div>
+    </form>
+
+
+
+  </div>
+</div>
+
+
+
+<script>
+function String() {
+    document.getElementById("mySelect").selectedIndex = 0;
+    document.getElementById("myForm").submit();
+}
+function Dictionary() {
+    document.getElementById("mySelect").selectedIndex = 1;
+    document.getElementById("myForm").submit();
+}
+function List() {
+    document.getElementById("mySelect").selectedIndex = 2;
+    document.getElementById("myForm").submit();
+}
+function Function() {
+    document.getElementById("mySelect").selectedIndex = 3;
+    document.getElementById("myForm").submit();
+}
+function Module() {
+    document.getElementById("mySelect").selectedIndex = 4;
+    document.getElementById("myForm").submit();
+}
+function Class() {
+    document.getElementById("mySelect").selectedIndex = 5;
+    document.getElementById("myForm").submit();
+}
+function All() {
+    document.getElementById("mySelect").selectedIndex = 6;
+    document.getElementById("myForm").submit();
+}
+</script>
+
+{% endblock %}
