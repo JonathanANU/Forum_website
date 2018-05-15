@@ -1,0 +1,62 @@
+#22/09/2016
+#The modules that we will be needing:
+    1. Matplotlib
+    2. Flask
+    3. Peewee
+    4. radar
+    5. Python (3.5)
+
+#---------------------------For team members --------------------------------------
+#Create an virtual environment with anaconda:
+    1. open terminal
+    2. type: conda create -n name_of_the_virtual_environment matplotlib flask
+    3. type 'y' to proceed
+    4. type: source activate name_of_the_virtual_environment
+    5. type: conda install peewee
+       note: depending on the privilege, you might have to type 'sudo pip install peewee'
+    6. type: pip install radar
+
+#Notes on virtual environment:
+    Virtual environment makes sure that everyone on the team has the same setup
+    ways to run '__init__.py':
+    1). With Pycharm (Mac OS X):
+        Go to setting (or preference):
+            click on the interpreter and then click on add local;
+            go to anaconda's envs folder, open the one that you created
+                go to bin folder, click on a file called python then confirm
+                    And we can just run '__init__.py' within PyCharm
+    2). With Pycharm (Windows):
+        Go to setting (Ctrl + Alt + s)  :
+            click on the interpreter and then click on add local;
+            go to anaconda's envs folder, open the one that you created
+                click on a file called python.exe then confirm
+                    And we can just run '__init__.py' within PyCharm
+
+
+    2). With Terminal:
+        Activate the virtual environment that we created by typing:
+            i) source activate name_of_the_virtual_environment
+            ii) change to the directory where '__init__.py' sits
+            iii) type: python __init__.py
+            iv) type source deactivate to exit from our virtual environment
+
+#Operating guide:
+There're two entries in the website:
+    (1) http://127.0.0.1:5000/login   //this is for user(students) default user: u1000 password: u1000
+    (2) http://127.0.0.1:5000/login-admin   //this is for administrator(lecturer and tutors) default administrator: u0000 password: u0000
+
+#Notes on testing the actual usages of the project:
+Delete the following files under the data folder inside Forum1040
+1. delete 1040.db which contains only the demo data
+2. delete demo_comment.txt, demo_post.txt, and id_demo.txt
+3. delete post_engine.py and register_demo.py
+
+On successfully completing the previous three steps, please do the following:
+4. input the students' IDs in the id.txt
+5. run register.py
+6. run add_admin.py and create admin users one at a time
+7. finally, you might want to change the debug to False on the last line in app.py
+8. run app.py
+
+Visit http://127.0.0.1:5000/login for students' view
+Visit http://127.0.0.1:5000/login-admin for admin's view

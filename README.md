@@ -1,86 +1,165 @@
-In the first stage, we focus on the building of core functions using primarily
+# COMP1040 Group Project
+Semester 2, 2016
 
-psycopg2, numpy, and matplotlib libraries to allow Python to work with 
+This `README.md` document describes the project requirements and method of assessment.
+Please read through the entire document carefully.
 
-PostgreSQL. Meanwhile, we will establish the basic framework of our website, 
+_The group project is worth **40%** of your course grade._
 
-using HTML and Google Map API.
+## Academic Honesty and Integrity
 
-In the second stage, we develop example web applications that is supported 
+Honesty and integrity are of utmost importance. These goals are *not* at odds with
+being resourceful and working collaboratively. You *should* be resourceful, you
+should collaborate within your team, and you should discuss the assignment and
+other aspects of the course with others taking the class. However, *you must never
+misrepresent the work of others as your own*. If you have taken ideas from elsewhere
+or used code sourced from elsewhere, you must say so with *utmost clarity*. At the
+completion of your project you will be asked to submit a statement of originality.
+This statement is the place for you to declare which ideas or code contained in
+your submission were sourced from elsewhere.
 
-by databases, in other words, joining frontend with backend.
+Please read the ANU's [official position](http://academichonesty.anu.edu.au/) on
+academic honesty. If you have any questions, please ask.
 
-In the third stage, if time permits, we want to refine our system using 
+Carefully review the [statement of originality](ORIGINALITY.md) and [statement of
+contributions](CONTRIBUTION.md) both of which you must edit as you complete your
+project, ensuring that a truthful statement is committed and pushed to your repo.
 
-Flask, peewee, SQLAlchemy.
-----------------------------------------------------------------------------
-Contents:
-The objectives of the project
-Modules used for the project
-The structure of the project
-Instructions on using the project
-Future development and reflection
+## Overview
 
-Project overview
-Originally, since all of the data processing and visualization we did were based on given data, we thought it would be cool and useful if we could work with real time data, i.e. databases, to generate graphs based on what is inside the databases as a more intuitive way to monitor the performance of our applications and systems associated with the databases. Connecting to databases and getting data using Python for future processing turned out to be much easier than we thought. So we took a step further, building our own application, a forum, in Python.
+The group project is an opportunity for you to put your _craft of computing_
+skills into practice on an interesting problem of your choosing. Projects
+should be done in groups of 2-5 people. If you do not have a group by
+the proposal deadline we will assign one to you. _You cannot work on the
+group project alone._
 
-While drifting on the ocean of code full of high waves and despair without a direction, Stack Overflow has been the lighthouse time and time again to guide us safe and sound to the shore of happiness. That’s where we realize the importance of peer communication and community learning. Inspired by that, we decided to build a forum system that, while enabling the communication between peer students, gives teachers and tutors more intuitive ways to monitor the posts made by students. In other words, we built a forum that integrated the data visualization and text processing as a part of its system. 
+Projects should have the flavour of what we have been doing in the course. That is,
+they need to involve some sort of data processing and analysis or simulation, and
+some form of visualisation. Apart from that, the projects can be very open ended
+and you are free to propose anything that interests you. We will provide feedback
+on projects that we think are either too ambitious, too simple, or otherwise
+inappropriate. You can even choose to do your project in a different programming
+language, but will need to provide a convincing argument as to why this is a good
+idea.
 
-Our forum application provides the following functionalities to its two groups of users: 
-For students:
-Login / change password
-View notices that are posted by the admin users of the forum
-Make posts
-View posts and comments
-Reply other posts
-For admin users (teachers, tutors):
-Login
-Create notices 
-Delete posts/comments/notices by ID
-View statistics
+As a guideline each group member should be spending 5-6 hours per week on the
+project. Taking into account some project management overhead, we would expect
+the scope of the project to be equivalent to approximately two assignments.
 
-Modules used for the project
-There are many frameworks that make the job much easier for web development in Python. Django and Flask are perhaps the most famous two. 
+## Project Management
 
-We chose Flask over Django for it is, as a minor yet powerful framework, easy to start with. Flask allows more freedom for designing the project layout. Traditionally, we have MVC pattern as the structure for a dynamic website, where MVC stands for model, view, and controller respectively. For Flask, however, the pattern used is MTV, where T stands for template, a Flask way to represent data, and V stands for view functions, which is the interface between the models and templates. 
+Your project should be managed using a GitLab repository. We will be
+looking for activity from all group members in terms of code commits
+and the use of the issue tracking system. You may also choose to
+include a `MEETINGS.md` file to keep a record of meeting minutes or
+make use of the GitLab wiki feature. You may also want to think about
+the role of each group member and assign tasks accordingly.
 
-For connecting with databases, we used Peewee, a small but robust module based on the idea of ORM, object-relational mapping. Peewee treats a relation as a class, and creating tables, updating, transactions, and querying can all be done by calling methods to the relation class in quite an elegant way. 
+## Project Repository Setup
 
-The structure of the project
-All the files related to Forum1040 is stored inside the Forum1040 folder, which contains three subfolders, data, static, and templates. Files like icons, CSS files, JavaScript files, fonts, and images are stored in static. Templates folder has html files that are used by the render_template function in flask module together with other parameters passed in to generate views dynamically. Finally, data directory contains files that work with database. 
+At the start of the project, one group member must fork this
+repository in GitLab and add the other group members as members of the
+project with `Master` project access. You should also make sure that
+the `comp1040-marker-2016` user is a member of the project with `Developer`
+access. And finally, check that the project's visibility is set to
+`Private`.  While one group member is the designated owner of the
+repository, it is every group member's responsibility to contribute to
+the project and make sure that the repo is setup correctly.
 
-app.py: the controller of the project, handles input generated by processingDB.py and forms submitted by user from various sites to dynamically alter the content of each html file.
-add_admin.py: by running this file, user with access to this file will be prompted to input the name and password for creating a new admin user one at a time.
-register.py: opens a text file named id.txt and assigns each line (ID) a default password
-data directory:
-configuration.py: this file is used to get the directory path of 1040.db file so that files from different locations can connect to the same database file
-models.py: using Peewee to define relations, and handles the connection with database
-processingDB.py: queries real time data mainly using Peewee from database, and uses Matplotlib to handle the visualization of data
-register_demo.py: creates a text file which has usernames for demonstration purpose from u1000 to u1099
-post_engine.py: processes two files, fake_comment.txt and fake_post.txt and insert them into the comment and post relation respectively as the demo comments and posts.
-templates directory: 
-base.html: one of the interesting points of using flask; since all of the websites share the same overall style and only vary in terms of content, base.html takes care of the overall style. Other html pages “extends” base.html to deal with content based on the style specified in base.html
-index.html: the home page of the forum which displays all the notices as well
-forum.html: aka the hardest part; deals with displaying all the posts and their associative comments
-post.html: where students make posts
-login.html: takes a user’s username and password and deals with the validation by passing the value to login function inside app.py
-change_password.html: where a user changes his or her password
-admin.html: the home page of admin, displaying all the statistics related to the contents in the forum database
-query.html: aka the interesting part; admin users can visit this page to delete inappropriate posts, comments, or outdated notices via IDs. Moreover, admin users can write SQL queries and get the corresponding result. 
-notice.html: admin users can add notices that are going to appear on the home page of the students’ side.
+It is important that you do not change the project name. Our automatic
+grading scripts rely on being able to find the project based on its
+name and if you change it you will receive zero marks for the project.
 
-Instructions on using the project
-Make sure the environment in which the project is ran has Python version 3.5, matplotlib, flask, peewee, sqlite3, and radar installed. 
+Once the repo is setup each project member should be able to clone a local copy.
+You must add a `PROPOSAL.md` file by the project proposal deadline (see below).
+Don't forget to _commit_ and _push_ this file. The repository already has templates
+for the statement of contributions and statement of originality that must be
+completed for the milestone and final submission. These are `CONTRIBUTION.md`
+and `ORIGINALITY.md`, respectively.
 
-To register users:
-Register students: input the students’ student IDs in the id.txt and run register.py afterwards. This will register students in the forum database by assigning each id a default password that is the same as the ID. Students can login using the initial password and then change the default password later. 
-Register admin users: run the add_admin.py file and operate accordingly to add admin user one at a time. 
+All code related to the project must be committed and pushed to the GitLab
+repository on a regular basis.
 
-After completing the previous steps, run the app.py file and visit the http://localhost:5000 to view the page. To visit the admin pages, visit http://localhost:5000/admin. 
+**Do not** commit large datasets to your repository. This is not necessary if
+the data is publicly available from another source. A better option is to
+include a `NOTES.md` file with instructions on how to obtain the data or, even
+better, a script for automatically downloading the data.
 
-Future development and reflection
-Web developing in Flask and Peewee is really fun! Even though the forum that we built is still pretty far from a real product, but it laid a solid foundation for understanding the techniques in web development. 
+## Project Proposal
 
-Password hashing and authentication are next steps to take. After done with that, we can show the product to teachers and students for opinion. Based on the feedback, adjust the project accordingly. Deploying the web app to a server is the next but not final thing to do.
+By **Friday, 23 September** you must have have setup your repository
+and added a project proposal (`PROPOSAL.md`). The project proposal
+must include (under the headings specified):
 
-One of the biggest takeaway from this project is to learn new things by doing. We started off by building a blog so simple that it was written in less than 100 lines of code. The trade-off here was that we ended up with tons of revising work to do. For our next web app, there will definitely be more planning, using Data Flow Diagram for example, beforehand.
+- Title
+ - The title of the project
+- Group Members
+ - List of group members (names and university IDs)
+- Overview
+ - A 2-3 paragraph overview of what the project is about and
+   what will be delivered at the end of the semester.
+- Data
+ - A description of where you will get your data.
+- Milestones
+ - A brief list of milestones (with dates) for tasks that you
+   aim to achieve towards delivery of your project.
+- Programming Language
+ - The programming language that you will use for the project.
+ - A strong justification must be given if the language is not Python.
+- References
+ - Any preliminary references that may be relevant for your project.
+
+## Code and Final Report
+
+Your project must be completed by **Friday, 28 October**. By this
+date your repository should include:
+
+- a working version of your code in the `master` branch
+- an updated `NOTES.md` file explaining how to run your code
+- completed `CONTRIBUTION.md` and `ORIGINALITY.md` files
+- a report describing your project and results (as `REPORT.pdf` or `REPORT.md`)
+  no more than four (printed) A4 pages
+
+## Project Presentation
+
+During the last week of semester we will schedule presentations of
+your projects. These will take place in the normal lecture slots 
+(and possibly lab slots depending on the number of groups).
+At least one member of each group is expected to attend and
+present. The presentations will be no longer than 5 minutes and should
+include both an overview of the project and live demonstration.
+
+A detailed schedule will be distributed by mid October.
+
+## Assessment
+
+Your project will be assessed based on three components:
+
+- **Project code (40%):** includes
+ - code quality, organisation and maintainability
+ - regular GitLab commits by all group members
+ - use of issue tracking and other project management tools
+- **Project report (40%):** quality and clarity of the report.
+- **Presentation (20%):** clarity of your in-class presentation and
+  project demonstration.
+
+## Important Dates
+
+- **Friday, 23 September:** Project proposals due via GitLab
+- **Monday, 24 October to Wednesday, 26 October:** In-class project presentations
+- **Friday, 28 October:** Final project deliverable due via GitLab
+
+## Data Sources
+
+The following data sources may provide useful inspiration for your projects:
+
+- http://data.gov.au/dataset
+- https://github.com/caesar0301/awesome-public-datasets
+- https://www.kaggle.com/competitions
+- http://mldata.org
+- http://labrosa.ee.columbia.edu/millionsong/
+- http://www.abs.gov.au/ausstats/abs@.nsf/mf/1379.0.55.001/
+- http://www.gutenberg.org/
+
+Remember to cite the source of your data and **do not** commit large
+datasets to your repo.

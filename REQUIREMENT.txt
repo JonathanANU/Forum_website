@@ -1,0 +1,5 @@
+flask
+peewee
+radar
+sqlite3
+python=3.5

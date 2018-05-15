@@ -1,0 +1,6 @@
+#Links and resources
+to learn about the general basics about flask and peewee:
+https://manual.cs50.net/seminars/#python_web_apps_with_flask
+
+to learn about the basics about API:
+https://www.youtube.com/watch?v=CbSKqL4J1QI&list=PL3aYavJKvvTgTMLYDyi5wZ5sGUDOJI1Wd
